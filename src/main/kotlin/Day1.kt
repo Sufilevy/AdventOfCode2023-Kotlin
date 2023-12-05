@@ -3,14 +3,14 @@ object Day1 {
 
 	fun puzzleTwo(input: List<String>): Int =
 		input.map { initialLine ->
-			digitsWords.fold(initialLine) { line, (from, to) -> line.replace(from, to) }
+			DIGITS_WORDS.fold(initialLine) { line, (from, to) -> line.replace(from, to) }
 		}.sumOf(::firstAndLastDigits)
 
 	private fun firstAndLastDigits(line: String): Int =
-		line.find { it.isDigit() }!!.digitToInt() * 10 +
-			line.findLast { it.isDigit() }!!.digitToInt()
+		line.first(Char::isDigit).digitToInt() * 10 +
+			line.last(Char::isDigit).digitToInt()
 
-	private val digitsWords = listOf(
+	private val DIGITS_WORDS = listOf(
 		"one" to "o1e",
 		"two" to "t2o",
 		"three" to "t3e",

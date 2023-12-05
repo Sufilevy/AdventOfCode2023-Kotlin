@@ -3,13 +3,10 @@ import kotlin.math.max
 object Day2 {
 	fun puzzleOne(input: List<String>): Int =
 		input.mapIndexed { index, line ->
-			val game = line.split(": ")[1]
+			val game = line.substringAfter(": ")
 
-			if (game.split("; ").all(::doesRoundMatchBag)) {
-				index + 1
-			} else {
-				0
-			}
+			if (game.split("; ").all(::doesRoundMatchBag)) index + 1
+			else 0
 		}.sum()
 
 	private val ELF_BAG = arrayOf(12, 13, 14)
@@ -25,11 +22,11 @@ object Day2 {
 			}
 		}
 
-	private fun numCubesOfColor(color: String): Int = color.split(' ')[0].toInt()
+	private fun numCubesOfColor(color: String): Int = color.substringBefore(' ').toInt()
 
 	fun puzzleTwo(input: List<String>): Int =
 		input.sumOf { line ->
-			val game = line.split(": ")[1]
+			val game = line.substringAfter(": ")
 
 			val minBag = game.split("; ").map(::bagOfRound).fold(arrayOf(0, 0, 0)) { minBag, bag ->
 				arrayOf(
@@ -51,7 +48,7 @@ object Day2 {
 				'n' -> bag[1] = numCubes  // Green
 				else -> bag[2] = numCubes // Blue
 			}
-			
+
 			bag
 		}
 }

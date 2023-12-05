@@ -6,12 +6,12 @@ object Day4 {
 		}
 
 	private fun winningCountOf(card: String): Int {
-		val parts = card.split(": ")[1].split(" | ")
+		val parts = card.substringAfter(": ").split(" | ")
 
 		val winningNumbers = numbersOf(parts[0])
 		val yourNumbers = numbersOf(parts[1])
 
-		return yourNumbers.intersect(winningNumbers.toSet()).size
+		return yourNumbers.intersect(winningNumbers).size
 	}
 
 	private fun numbersOf(part: String): Set<Int> =
@@ -19,9 +19,7 @@ object Day4 {
 
 	fun puzzleTwo(input: List<String>): Int =
 		input.map(::winningCountOf).withIndex().toList().let { cards ->
-			cards.sumOf {
-				numberOfCardsFromCard(it.index, cards)
-			} + cards.size
+			cards.size + cards.sumOf { numberOfCardsFromCard(it.index, cards) }
 		}
 
 	private val CARDS_CACHE = mutableMapOf<Int, Int>()
