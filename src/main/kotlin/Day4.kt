@@ -1,0 +1,38 @@
+object Day4 {
+	fun puzzleOne(input: List<String>): Int =
+		input.sumOf { card ->
+			val winningCount = winningCountOf(card)
+			if (winningCount == 0) 0 else 2 pow (winningCount - 1)
+		}
+
+	private fun winningCountOf(card: String): Int {
+		val parts = card.split(": ")[1].split(" | ")
+
+		val winningNumbers = numbersOf(parts[0])
+		val yourNumbers = numbersOf(parts[1])
+
+		return yourNumbers.intersect(winningNumbers.toSet()).size
+	}
+
+	private fun numbersOf(part: String): Set<Int> =
+		part.trim().splitWhitespace().map(String::toInt).toSet()
+
+	fun puzzleTwo(input: List<String>): Int =
+		input.map(::winningCountOf).withIndex().toList().let { cards ->
+			cards.sumOf {
+				numberOfCardsFromCard(it.index, cards)
+			} + cards.size
+		}
+
+	private val CARDS_CACHE = mutableMapOf<Int, Int>()
+
+	private fun numberOfCardsFromCard(cardIndex: Int, cards: List<IndexedValue<Int>>): Int {
+		CARDS_CACHE[cardIndex]?.let { return it }
+
+		var winningCount = cards[cardIndex].value
+		winningCount += cards.drop(cardIndex + 1).take(winningCount).sumOf { numberOfCardsFromCard(it.index, cards) }
+
+		return winningCount.also { CARDS_CACHE[cardIndex] = it }
+	}
+}
+
