@@ -1,6 +1,6 @@
 object Day4 {
-	fun puzzleOne(input: List<String>): Int =
-		input.sumOf { card ->
+	fun puzzleOne(input: String): Int =
+		input.lines().sumOf { card ->
 			val winningCount = winningCountOf(card)
 			if (winningCount == 0) 0 else 2 pow (winningCount - 1)
 		}
@@ -17,8 +17,8 @@ object Day4 {
 	private fun numbersOf(part: String): Set<Int> =
 		part.trim().splitWhitespace().map(String::toInt).toSet()
 
-	fun puzzleTwo(input: List<String>): Int =
-		input.map(::winningCountOf).withIndex().toList().let { cards ->
+	fun puzzleTwo(input: String): Int =
+		input.lines().map(::winningCountOf).withIndex().toList().let { cards ->
 			cards.size + cards.sumOf { numberOfCardsFromCard(it.index, cards) }
 		}
 

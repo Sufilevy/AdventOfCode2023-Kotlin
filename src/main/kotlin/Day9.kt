@@ -1,6 +1,6 @@
 object Day9 {
-	fun puzzleOne(input: List<String>): Int =
-		input.sumOf {
+	fun puzzleOne(input: String): Int =
+		input.lines().sumOf {
 			val line = it.splitWhitespace().map(String::toInt).toList()
 			extrapolateNext(line)
 		}
@@ -17,7 +17,7 @@ object Day9 {
 			it - line[index - 1]
 		}
 
-	fun puzzleTwo(input: List<String>): Int = input.sumOf {
+	fun puzzleTwo(input: String): Int = input.lines().sumOf {
 		val line = it.splitWhitespace().map(String::toInt).toList()
 		extrapolatePrevious(line)
 	}

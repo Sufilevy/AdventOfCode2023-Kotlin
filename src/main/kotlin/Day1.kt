@@ -1,8 +1,8 @@
 object Day1 {
-	fun puzzleOne(input: List<String>): Int = input.sumOf(::firstAndLastDigits)
+	fun puzzleOne(input: String): Int = input.lines().sumOf(::firstAndLastDigits)
 
-	fun puzzleTwo(input: List<String>): Int =
-		input.map { initialLine ->
+	fun puzzleTwo(input: String): Int =
+		input.lines().map { initialLine ->
 			DIGITS_WORDS.fold(initialLine) { line, (from, to) -> line.replace(from, to) }
 		}.sumOf(::firstAndLastDigits)
 

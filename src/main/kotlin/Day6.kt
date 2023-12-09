@@ -1,12 +1,13 @@
 import kotlin.math.*
 
 object Day6 {
-
-	fun puzzleOne(input: List<String>): Int =
-		input[0].splitToNumbers()
-			.zip(input[1].splitToNumbers())
-			.map(::optionsCountOfRace)
-			.reduce(Int::times)
+	fun puzzleOne(input: String): Int =
+		input.lines().let { (firstLine, secondLine) ->
+			firstLine.splitToNumbers()
+				.zip(secondLine.splitToNumbers())
+				.map(::optionsCountOfRace)
+				.reduce(Int::times)
+		}
 
 	private fun String.splitToNumbers(): List<Double> = splitWhitespace().drop(1).map(String::toDouble)
 
@@ -20,10 +21,12 @@ object Day6 {
 		return floor(maxDuration).toInt() - ceil(minDuration).toInt() + 1
 	}
 
-	fun puzzleTwo(input: List<String>): Int =
-		optionsCountOfRace(
-			input[0].combineToNumber() to input[1].combineToNumber()
-		)
+	fun puzzleTwo(input: String): Int =
+		input.lines().let { (firstLine, secondLine) ->
+			optionsCountOfRace(
+				firstLine.combineToNumber() to secondLine.combineToNumber()
+			)
+		}
 
 	private fun String.combineToNumber(): Double = substringAfter(':').removeWhitespace().toDouble()
 }
